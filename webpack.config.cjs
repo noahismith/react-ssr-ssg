@@ -37,7 +37,6 @@ const serverConfig = {
     module: {
         rules: [babelLoader],
     },
-
     resolve: {
         extensions: ['.js', '.jsx'],
     },

@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
+import { About } from './pages/About';
+import { Home } from './pages/Home';
 
 export const App = () => {
     return (
@@ -12,7 +15,23 @@ export const App = () => {
                 <title>SSR</title>
             </head>
             <body>
-                <div id="root"></div>
+                <div id="root">
+                    <nav>
+                        <ul>
+                            <li>
+                                <Link to="/">Home</Link>
+                                <Link to="/about">About</Link>
+                                <Link to="/projects">Projects</Link>
+                            </li>
+                        </ul>
+                    </nav>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/projects" element={<></>} />
+                        <Route path="/projects/:projectId" element={<></>} />
+                    </Routes>
+                </div>
             </body>
         </html>
     );

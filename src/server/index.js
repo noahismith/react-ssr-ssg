@@ -1,25 +1,56 @@
 import express from 'express';
 import React from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
+import { StaticRouter } from 'react-router-dom/server';
 import { App } from '../components/App';
+import path from 'node:path';
 
 const app = express();
 
-app.use(express.static('dist'));
+// Middleware serve static js
+app.use(/.*js$/, (req, res) => {
+    res.sendFile(path.resolve(__dirname, `./${req.originalUrl}`));
+});
 
-app.use('*', (request, response) => {
-    const { pipe } = renderToPipeableStream(<App />, {
-        bootstrapScripts: ['client.bundle.js'],
-        onShellReady() {
-            response.statusCode = 200;
-            response.setHeader('content-type', 'text/html');
-            pipe(response);
-        },
-        onShellError(error) {
-            response.statusCode = 500;
-            response.setHeader('content-type', 'text/html');
-            response.send('<h1>Error</h1>');
-        },
+app.use('/', (req, res, next) => {
+    if (req.originalUrl === '/favicon.ico') {
+        res.sendStatus(404);
+    }
+    // Derive the file path from route
+    let prerenderedPath = path.resolve(
+        __dirname,
+        req.originalUrl === '/'
+            ? './html/index.html'
+            : `./html${req.originalUrl}.html`
+    );
+    console.log(prerenderedPath);
+    // Send prerendered html
+    res.sendFile(prerenderedPath, (err) => {
+        // Static file not found, fallback to SSR
+        if (err) {
+            console.log('SSR');
+            const { pipe } = renderToPipeableStream(
+                <React.StrictMode>
+                    <StaticRouter location={req.url}>
+                        <App />
+                    </StaticRouter>
+                </React.StrictMode>,
+                {
+                    bootstrapScripts: ['client.bundle.js'],
+                    onShellReady() {
+                        res.statusCode = 200;
+                        res.setHeader('content-type', 'text/html');
+                        pipe(res);
+                    },
+                    onShellError(error) {
+                        res.statusCode = 500;
+                        res.setHeader('content-type', 'text/html');
+                        res.send('<h1>Error</h1>');
+                    },
+                }
+            );
+        }
+        console.log('SSG');
     });
 });
 

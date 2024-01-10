@@ -12,6 +12,24 @@ const babelLoader = {
     },
 };
 
+const mdxLoader = {
+    test: /\.mdx$/,
+    use: [
+        {
+            loader: 'babel-loader',
+            options: {
+                presets: ['@babel/preset-env', '@babel/preset-react'],
+            },
+        },
+        {
+            loader: '@mdx-js/loader',
+        },
+    ],
+    resolve: {
+        fullySpecified: false,
+    },
+};
+
 const clientConfig = {
     target: 'web',
     entry: './src/client/index.jsx',
@@ -20,7 +38,7 @@ const clientConfig = {
         path: path.resolve(__dirname, 'dist'),
     },
     module: {
-        rules: [babelLoader],
+        rules: [babelLoader, mdxLoader],
     },
     resolve: {
         extensions: ['.js', '.jsx'],
@@ -35,11 +53,26 @@ const serverConfig = {
         path: path.resolve(__dirname, 'dist'),
     },
     module: {
-        rules: [babelLoader],
+        rules: [babelLoader, mdxLoader],
     },
     resolve: {
         extensions: ['.js', '.jsx'],
     },
 };
 
-module.exports = [clientConfig, serverConfig];
+const ssgConfig = {
+    target: 'node',
+    entry: './src/server/prerender.js',
+    output: {
+        filename: 'prerender.bundle.cjs',
+        path: path.resolve(__dirname, 'dist'),
+    },
+    module: {
+        rules: [babelLoader, mdxLoader],
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+};
+
+module.exports = [clientConfig, serverConfig, ssgConfig];

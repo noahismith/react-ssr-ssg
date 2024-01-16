@@ -28,4 +28,5 @@ npm run start
 
 ## Resources
 
-[renderToPipeableStream](https://react.dev/reference/react-dom/server/renderToPipeableStream) \[hydrateRoot](https://react.dev/reference/react-dom/client/hydrateRoot)
+[renderToPipeableStream](https://react.dev/reference/react-dom/server/renderToPipeableStream) \
+[hydrateRoot](https://react.dev/reference/react-dom/client/hydrateRoot)

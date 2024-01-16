@@ -22,6 +22,10 @@ app.use('/', (req, res, next) => {
     );
     // Send prerendered html (SSG)
     res.sendFile(prerenderedPath, (err) => {
+        // Ignore favicon request
+        if (req.originalUrl === '/favicon.ico') {
+            res.status(404).send('Not found');
+        }
         // Static file not found, fallback to (SSR)
         if (err) {
             const { pipe } = renderToPipeableStream(
@@ -45,8 +49,9 @@ app.use('/', (req, res, next) => {
                 }
             );
             console.log('SSR');
+        } else {
+            console.log('SSG');
         }
-        console.log('SSG');
     });
 });
 

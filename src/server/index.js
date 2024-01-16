@@ -44,7 +44,9 @@ app.use('/', (req, res, next) => {
                     },
                 }
             );
+            console.log('SSR');
         }
+        console.log('SSG');
     });
 });
 

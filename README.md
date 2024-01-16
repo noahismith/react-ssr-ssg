@@ -10,6 +10,7 @@ Download this repo and install dependencies. You will also need Node on your mac
 
 ```sh
 git clone https://github.com/noahismith/react-ssr-ssg.git
+cd react-ssr-ssg
 npm install
 ```
 

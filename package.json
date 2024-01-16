@@ -1,7 +1,7 @@
 {
-    "name": "static-site-generation",
+    "name": "react-ssr-ssg",
     "version": "1.0.0",
-    "description": "A barebones example of SSG using React, and Webpack",
+    "description": "A barebones example of SSG and SSR using React, and Webpack",
     "main": "./server/index.js",
     "type": "module",
     "scripts": {

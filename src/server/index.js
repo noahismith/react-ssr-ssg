@@ -48,6 +48,6 @@ app.use('/', (req, res, next) => {
     });
 });
 
-app.listen(3000, process.env.HOST, () => {
-    console.log(`App is running on ${process.env.HOST}`);
+app.listen(3000, () => {
+    console.log('App is running on ');
 });

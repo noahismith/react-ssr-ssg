@@ -12,7 +12,7 @@ export const App = () => {
                     name="viewport"
                     content="width=device-width, initial-scale=1.0"
                 />
-                <title>SSR</title>
+                <title>SSG/SSR Example</title>
             </head>
             <body>
                 <div id="root">
@@ -21,15 +21,12 @@ export const App = () => {
                             <li>
                                 <Link to="/">Home</Link>
                                 <Link to="/about">About</Link>
-                                <Link to="/projects">Projects</Link>
                             </li>
                         </ul>
                     </nav>
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<About />} />
-                        <Route path="/projects" element={<></>} />
-                        <Route path="/projects/:projectId" element={<></>} />
                     </Routes>
                 </div>
             </body>

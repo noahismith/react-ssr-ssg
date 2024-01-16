@@ -10,11 +10,14 @@ const routes = fs.readdirSync('./src/components/pages').map((file) => {
     return name === 'home' ? '/' : `/${name}`;
 });
 
-// TODO: create html directory if not existing
-
-// Prerender each route, and save to dist folder
+// Prerender each route, and save to dist folder as html file
 for (const route of routes) {
+    // Create html dir if it does not exist
+    if (!fs.existsSync('./dist/html')) {
+        fs.mkdirSync('./dist/html');
+    }
     let destinationPath = `./dist/html${route === '/' ? '/index' : route}.html`;
+    // Create a file stream to write too
     const writableStream = fs.createWriteStream(destinationPath);
     const { pipe } = renderToPipeableStream(
         <React.StrictMode>

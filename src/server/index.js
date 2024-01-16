@@ -13,9 +13,6 @@ app.use(/.*js$/, (req, res) => {
 });
 
 app.use('/', (req, res, next) => {
-    if (req.originalUrl === '/favicon.ico') {
-        res.sendStatus(404);
-    }
     // Derive the file path from route
     let prerenderedPath = path.resolve(
         __dirname,
@@ -23,12 +20,10 @@ app.use('/', (req, res, next) => {
             ? './html/index.html'
             : `./html${req.originalUrl}.html`
     );
-    console.log(prerenderedPath);
-    // Send prerendered html
+    // Send prerendered html (SSG)
     res.sendFile(prerenderedPath, (err) => {
-        // Static file not found, fallback to SSR
+        // Static file not found, fallback to (SSR)
         if (err) {
-            console.log('SSR');
             const { pipe } = renderToPipeableStream(
                 <React.StrictMode>
                     <StaticRouter location={req.url}>
@@ -50,10 +45,9 @@ app.use('/', (req, res, next) => {
                 }
             );
         }
-        console.log('SSG');
     });
 });
 
-app.listen(3000, '192.168.0.120', () => {
-    console.log('App is running on http://192.168.0.120:3000');
+app.listen(3000, process.env.HOST, () => {
+    console.log(`App is running on ${process.env.HOST}`);
 });

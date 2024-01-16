@@ -9,7 +9,7 @@ A simplified example of static site generation (SSG) with conditional server sid
 Download this repo and install dependencies. You will also need Node on your machine.
 
 ```sh
-git clone ...
+git clone https://github.com/noahismith/react-ssr-ssg.git
 npm install
 ```
 
@@ -28,4 +28,4 @@ npm run start
 
 ## Resources
 
-[renderToPipeableStream](https://react.dev/reference/react-dom/server/renderToPipeableStream) [hydrateRoot](https://react.dev/reference/react-dom/client/hydrateRoot)
+[renderToPipeableStream](https://react.dev/reference/react-dom/server/renderToPipeableStream) \[hydrateRoot](https://react.dev/reference/react-dom/client/hydrateRoot)
